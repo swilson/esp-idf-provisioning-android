@@ -29,6 +29,7 @@ import androidx.core.widget.ContentLoadingProgressBar;
 
 import com.espressif.AppConstants;
 import com.espressif.provisioning.DeviceConnectionEvent;
+import com.espressif.provisioning.listeners.ResponseListener;
 import com.espressif.wifi_provisioning.R;
 import com.espressif.provisioning.ESPConstants;
 import com.espressif.provisioning.ESPProvisionManager;
@@ -103,7 +104,20 @@ public class ProvisionActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            provisionManager.getEspDevice().disconnectDevice();
+            provisionManager.getEspDevice().sendDataToCustomEndPoint("conn-status", new byte[]{0}, new ResponseListener() {
+                @Override
+                public void onSuccess(byte[] returnData) {
+                    Log.d(TAG, "conn-status " + new String(returnData));
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+
+                }
+            });
+
+
+            //provisionManager.getEspDevice().disconnectDevice();
             finish();
         }
     };
@@ -238,7 +252,7 @@ public class ProvisionActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
+                        Log.d(TAG, "failed: " + failureReason);
                         switch (failureReason) {
                             case AUTH_FAILED:
                                 tvErrAtStep3.setText(R.string.error_authentication_failed);
@@ -263,7 +277,6 @@ public class ProvisionActivity extends AppCompatActivity {
 
             @Override
             public void deviceProvisioningSuccess() {
-
                 runOnUiThread(new Runnable() {
 
                     @Override
