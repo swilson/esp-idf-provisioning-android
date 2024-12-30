@@ -111,14 +111,10 @@ public class ProvisionActivity extends AppCompatActivity {
                 public void onSuccess(byte[] returnData) {
                     Log.d(TAG, "conn-status " + new String(returnData));
                 }
-
                 @Override
                 public void onFailure(Exception e) {
-
                 }
             });
-
-
             //provisionManager.getEspDevice().disconnectDevice();
             finish();
         }
@@ -168,112 +164,23 @@ public class ProvisionActivity extends AppCompatActivity {
 
                     runOnUiThread(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        tick1.setImageResource(R.drawable.ic_error);
-                        tick1.setVisibility(View.VISIBLE);
-                        progress1.setVisibility(View.GONE);
-                        tvErrAtStep1.setVisibility(View.VISIBLE);
-                        tvErrAtStep1.setText(R.string.error_session_creation);
-                        tvProvError.setVisibility(View.VISIBLE);
-                        hideLoading();
-                    }
-                });
-            }
-
-            @Override
-            public void wifiConfigSent() {
-
-                runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        tick1.setImageResource(R.drawable.ic_checkbox_on);
-                        tick1.setVisibility(View.VISIBLE);
-                        progress1.setVisibility(View.GONE);
-                        tick2.setVisibility(View.GONE);
-                        progress2.setVisibility(View.VISIBLE);
-                    }
-                });
-            }
-
-            @Override
-            public void wifiConfigFailed(Exception e) {
-
-                runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        tick1.setImageResource(R.drawable.ic_error);
-                        tick1.setVisibility(View.VISIBLE);
-                        progress1.setVisibility(View.GONE);
-                        tvErrAtStep1.setVisibility(View.VISIBLE);
-                        tvErrAtStep1.setText(R.string.error_prov_step_1);
-                        tvProvError.setVisibility(View.VISIBLE);
-                        hideLoading();
-                    }
-                });
-            }
-
-            @Override
-            public void wifiConfigApplied() {
-
-                runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        tick2.setImageResource(R.drawable.ic_checkbox_on);
-                        tick2.setVisibility(View.VISIBLE);
-                        progress2.setVisibility(View.GONE);
-                        tick3.setVisibility(View.GONE);
-                        progress3.setVisibility(View.VISIBLE);
-                    }
-                });
-            }
-
-            @Override
-            public void wifiConfigApplyFailed(Exception e) {
-
-                runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        tick2.setImageResource(R.drawable.ic_error);
-                        tick2.setVisibility(View.VISIBLE);
-                        progress2.setVisibility(View.GONE);
-                        tvErrAtStep2.setVisibility(View.VISIBLE);
-                        tvErrAtStep2.setText(R.string.error_prov_step_2);
-                        tvProvError.setVisibility(View.VISIBLE);
-                        hideLoading();
-                    }
-                });
-            }
-
-            @Override
-            public void provisioningFailedFromDevice(final ESPConstants.ProvisionFailureReason failureReason) {
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d(TAG, "failed: " + failureReason);
-                        switch (failureReason) {
-                            case AUTH_FAILED:
-                                tvErrAtStep3.setText(R.string.error_authentication_failed);
-                                break;
-                            case NETWORK_NOT_FOUND:
-                                tvErrAtStep3.setText(R.string.error_network_not_found);
-                                break;
-                            case DEVICE_DISCONNECTED:
-                            case UNKNOWN:
-                                tvErrAtStep3.setText(R.string.error_prov_step_3);
-                                break;
+                        @Override
+                        public void run() {
+                            tick1.setImageResource(R.drawable.ic_error);
+                            tick1.setVisibility(View.VISIBLE);
+                            progress1.setVisibility(View.GONE);
+                            tvErrAtStep1.setVisibility(View.VISIBLE);
+                            tvErrAtStep1.setText(R.string.error_session_creation);
+                            tvProvError.setVisibility(View.VISIBLE);
+                            hideLoading();
                         }
                     });
                 }
 
-            @Override
-            public void deviceProvisioningSuccess() {
-                runOnUiThread(new Runnable() {
+                @Override
+                public void wifiConfigSent() {
+
+                    runOnUiThread(new Runnable() {
 
                         @Override
                         public void run() {
