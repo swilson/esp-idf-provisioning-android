@@ -106,16 +106,7 @@ public class ProvisionActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            provisionManager.getEspDevice().sendDataToCustomEndPoint("conn-status", new byte[]{0}, new ResponseListener() {
-                @Override
-                public void onSuccess(byte[] returnData) {
-                    Log.d(TAG, "conn-status " + new String(returnData));
-                }
-                @Override
-                public void onFailure(Exception e) {
-                }
-            });
-            //provisionManager.getEspDevice().disconnectDevice();
+            provisionManager.getEspDevice().disconnectDevice();
             finish();
         }
     };

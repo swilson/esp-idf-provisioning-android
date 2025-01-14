@@ -209,6 +209,7 @@ public class BLEProvisionLanding extends ManualProvBaseActivity {
 
             case ESPConstants.EVENT_DEVICE_CONNECTED:
                 Log.d(TAG, "Device Connected Event Received");
+                checkConnStatus();
                 progressBar.setVisibility(View.GONE);
                 isConnecting = false;
                 isDeviceConnected = true;
@@ -476,6 +477,27 @@ public class BLEProvisionLanding extends ManualProvBaseActivity {
         }
     };
 
+    private void checkConnStatus() {
+        for (int i = 0; i < 4; ++i) {
+            Log.d(TAG, "Checking conn-status");
+            provisionManager.getEspDevice().sendDataToCustomEndPoint("conn-status", new byte[]{0}, new ResponseListener() {
+                @Override
+                public void onSuccess(byte[] returnData) {
+                    Log.d(TAG, "conn-status " + new String(returnData));
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                }
+            });
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException exception) {
+
+            }
+        }
+    }
+
     private AdapterView.OnItemClickListener onDeviceCLickListener = new AdapterView.OnItemClickListener() {
 
         @Override
@@ -565,7 +587,6 @@ public class BLEProvisionLanding extends ManualProvBaseActivity {
     }
 
     private void goToWifiScanListActivity() {
-
         finish();
         Intent wifiListIntent = new Intent(getApplicationContext(), WiFiScanActivity.class);
         wifiListIntent.putExtra(AppConstants.KEY_DEVICE_NAME, deviceList.get(position).getName());
